@@ -7,6 +7,7 @@ const input = process.stdin;
 const output = process.stdout;
 
 import goUp from "./commands/commandUp.js";
+import goCd from "./commands/commandCd.js";
 
 process.chdir(homedir()); // change directory
 
@@ -34,8 +35,13 @@ rl
     let [command, ...args] = data.split(' ');
     // console.log(command, args);
 
-    if (command === 'up') {
-      goUp();
+    switch (command) {
+      case 'up':
+        goUp();
+        break;
+      case 'cd':
+        goCd(args[0]);
+        break;
     }
   })
 
