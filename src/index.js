@@ -8,6 +8,7 @@ const output = process.stdout;
 
 import goUp from "./commands/commandUp.js";
 import goCd from "./commands/commandCd.js";
+import goLs from "./commands/commandLs.js";
 
 process.chdir(homedir()); // change directory
 
@@ -31,9 +32,9 @@ rl
       rl.close();
       return
     }
+
     else data = data.trim();
     let [command, ...args] = data.split(' ');
-    // console.log(command, args);
 
     switch (command) {
       case 'up':
@@ -42,6 +43,11 @@ rl
       case 'cd':
         goCd(args[0]);
         break;
+      case 'ls':
+        goLs();
+        break;
+      default:
+        console.log('Invalid input');
     }
   })
 
