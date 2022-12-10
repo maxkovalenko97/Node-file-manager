@@ -6,6 +6,6 @@ export default function goCd(directory) {
     chdir(directory);
     showCurrentDirectory();
   } catch (error) {
-    console.log('Operation failed')
+    console.error('Operation failed')
   }
 }
