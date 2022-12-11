@@ -14,6 +14,7 @@ import goAdd from "./commands/commandAdd.js";
 import goRn from "./commands/commandRn.js";
 import goCp from "./commands/commandCp.js";
 import goMv from "./commands/commandMv.js";
+import goRm from "./commands/commandRm.js";
 
 process.chdir(homedir()); // change directory
 
@@ -65,6 +66,9 @@ rl
         break;
       case 'mv':
         goMv(args[0], args[1]);
+        break;
+      case 'rm':
+        goRm(args[0]);
         break;
       default:
         console.log('Invalid input');
