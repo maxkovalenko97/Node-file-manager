@@ -1,7 +1,7 @@
 import os, { homedir } from "os";
 import readline from "readline";
 import { showCurrentDirectory } from "./utils.js";
-import EventEmitter from "events";
+
 
 const input = process.stdin;
 const output = process.stdout;
@@ -13,6 +13,7 @@ import goCat from "./commands/commandCat.js";
 import goAdd from "./commands/commandAdd.js";
 import goRn from "./commands/commandRn.js";
 import goCp from "./commands/commandCp.js";
+import goMv from "./commands/commandMv.js";
 
 process.chdir(homedir()); // change directory
 
@@ -62,11 +63,12 @@ rl
       case 'cp':
         goCp(args[0], args[1]);
         break;
+      case 'mv':
+        goMv(args[0], args[1]);
+        break;
       default:
         console.log('Invalid input');
     }
   })
 
-// const myEmitter = new EventEmitter();
-// myEmitter.on('event', (...args) => console.log('emit!!!!', args.join('')));
-// myEmitter.emit('event', 'saasd', 2, null);
+
