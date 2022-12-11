@@ -16,6 +16,7 @@ import goCp from "./commands/commandCp.js";
 import goMv from "./commands/commandMv.js";
 import goRm from "./commands/commandRm.js";
 import goOs from "./commands/commandOs.js";
+import getHash from "./commands/getHash.js";
 
 process.chdir(os.homedir()); // change directory
 
@@ -74,8 +75,12 @@ rl
       case 'os':
         goOs(args[0]);
         break;
+      case 'hash':
+        getHash(args[0]);
+        break;
       default:
-        console.log('Invalid input');
+        console.error('Invalid input');
+        showCurrentDirectory();
     }
   })
 
