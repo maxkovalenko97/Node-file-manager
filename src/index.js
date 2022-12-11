@@ -17,6 +17,7 @@ import goMv from "./commands/commandMv.js";
 import goRm from "./commands/commandRm.js";
 import goOs from "./commands/commandOs.js";
 import getHash from "./commands/getHash.js";
+import compressFile from "./commands/compressFile.js";
 
 process.chdir(os.homedir()); // change directory
 
@@ -77,6 +78,9 @@ rl
         break;
       case 'hash':
         getHash(args[0]);
+        break;
+      case 'compress':
+        compressFile(args[0], args[1]);
         break;
       default:
         console.error('Invalid input');

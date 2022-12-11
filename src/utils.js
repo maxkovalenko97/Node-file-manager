@@ -1,4 +1,5 @@
 import fs, { stat } from 'fs';
+import { open } from 'fs/promises';
 import path, { resolve } from 'path';
 
 export default function showCurrentDirectory(arg) {
@@ -6,21 +7,20 @@ export default function showCurrentDirectory(arg) {
   process.stdout.write(`You are currently in ${dir}\n`);
 }
 
-async function isFileOrDir(path) {
+async function isFile(pathToFile) {
+  let filehandle, stats;
   try {
-    const stats = await stat(path);
-    if (stats.isDirectory()) {
-      return 'directory';
-    }
-  } catch (error) {
-    if (stats.ifFile()) {
+    pathToFile = path.resolve(pathToFile);
+    filehandle = await open(pathToFile, 'r');
+    stats = await filehandle.stat();
+    if (stats.isFile()) {
       return 'file';
+    } else {
+      return 'dir';
     }
-    console.error('Non file Non Directory ???');
+  } catch (err) {
+    console.log('Operation failed');
   }
 }
 
-// export { isFileOrDir };
-
-// cd basic-js
-// cp text.txt test1
+export { isFile };
