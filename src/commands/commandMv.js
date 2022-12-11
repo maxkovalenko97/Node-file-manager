@@ -1,4 +1,4 @@
-import { showCurrentDirectory } from "../utils.js";
+import showCurrentDirectory from "../utils.js";
 import fs from 'fs';
 import { unlink } from "fs/promises";
 import path from "path";

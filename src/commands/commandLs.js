@@ -1,6 +1,6 @@
 // import { readdir } from 'fs';
 import { readdir } from 'fs/promises';
-import { showCurrentDirectory } from "../utils.js";
+import showCurrentDirectory from "../utils.js";
 
 export default async function goLs() {
   try {

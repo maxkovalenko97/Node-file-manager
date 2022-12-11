@@ -1,6 +1,6 @@
-import os, { homedir } from "os";
+import os from "os";
 import readline from "readline";
-import { showCurrentDirectory } from "./utils.js";
+import showCurrentDirectory from "./utils.js";
 
 
 const input = process.stdin;
@@ -15,8 +15,9 @@ import goRn from "./commands/commandRn.js";
 import goCp from "./commands/commandCp.js";
 import goMv from "./commands/commandMv.js";
 import goRm from "./commands/commandRm.js";
+import goOs from "./commands/commandOs.js";
 
-process.chdir(homedir()); // change directory
+process.chdir(os.homedir()); // change directory
 
 const parsedArgs = Object.fromEntries(process.argv.slice(2).map((arg) => {
   return arg.split('=');
@@ -69,6 +70,9 @@ rl
         break;
       case 'rm':
         goRm(args[0]);
+        break;
+      case 'os':
+        goOs(args[0]);
         break;
       default:
         console.log('Invalid input');

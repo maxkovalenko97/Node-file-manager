@@ -1,7 +1,7 @@
 import fs, { stat } from 'fs';
 import path, { resolve } from 'path';
 
-function showCurrentDirectory(arg) {
+export default function showCurrentDirectory(arg) {
   let dir = arg ? arg : process.cwd();
   process.stdout.write(`You are currently in ${dir}\n`);
 }
@@ -20,7 +20,7 @@ async function isFileOrDir(path) {
   }
 }
 
-export { showCurrentDirectory, isFileOrDir };
+// export { isFileOrDir };
 
 // cd basic-js
 // cp text.txt test1
