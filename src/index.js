@@ -10,6 +10,7 @@ import goUp from "./commands/commandUp.js";
 import goCd from "./commands/commandCd.js";
 import goLs from "./commands/commandLs.js";
 import goCat from "./commands/commandCat.js";
+import goAdd from "./commands/commandAdd.js";
 
 process.chdir(homedir()); // change directory
 
@@ -49,6 +50,9 @@ rl
         break;
       case 'cat':
         goCat(args[0]);
+        break;
+      case 'add':
+        goAdd(args[0]);
         break;
       default:
         console.log('Invalid input');
