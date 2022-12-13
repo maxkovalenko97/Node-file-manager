@@ -18,6 +18,7 @@ import goRm from "./commands/commandRm.js";
 import goOs from "./commands/commandOs.js";
 import getHash from "./commands/getHash.js";
 import compressFile from "./commands/compressFile.js";
+import decompressFile from "./commands/decompressFile.js";
 
 process.chdir(os.homedir()); // change directory
 
@@ -81,6 +82,9 @@ rl
         break;
       case 'compress':
         compressFile(args[0], args[1]);
+        break;
+      case 'decompress':
+        decompressFile(args[0], args[1]);
         break;
       default:
         console.error('Invalid input');
