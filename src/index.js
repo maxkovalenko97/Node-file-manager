@@ -1,11 +1,6 @@
 import os from "os";
 import readline from "readline";
 import showCurrentDirectory from "./utils.js";
-
-
-const input = process.stdin;
-const output = process.stdout;
-
 import goUp from "./commands/commandUp.js";
 import goCd from "./commands/commandCd.js";
 import goLs from "./commands/commandLs.js";
@@ -20,7 +15,10 @@ import getHash from "./commands/getHash.js";
 import compressFile from "./commands/compressFile.js";
 import decompressFile from "./commands/decompressFile.js";
 
-process.chdir(os.homedir()); // change directory
+const input = process.stdin;
+const output = process.stdout;
+
+process.chdir(os.homedir());
 
 const parsedArgs = Object.fromEntries(process.argv.slice(2).map((arg) => {
   return arg.split('=');
@@ -28,7 +26,7 @@ const parsedArgs = Object.fromEntries(process.argv.slice(2).map((arg) => {
 
 const username = parsedArgs['--username'] ? parsedArgs['--username'] : 'Dear Guest';
 
-output.write(`\nWelcome to the File Manager, ${username}!\n`);
+output.write(`Welcome to the File Manager, ${username}!\n`);
 
 showCurrentDirectory();
 
@@ -48,48 +46,51 @@ rl
 
     switch (command) {
       case 'up':
-        goUp();
+        (args.length !== 0) ? showErrorArgs() : goUp();
         break;
       case 'cd':
-        goCd(args[0]);
+        (args.length !== 1) ? showErrorArgs() : goCd(args[0]);
         break;
       case 'ls':
-        goLs();
+        (args.length !== 0) ? showErrorArgs() : goLs();
         break;
       case 'cat':
-        goCat(args[0]);
+        (args.length !== 1) ? showErrorArgs() : goCat(args[0]);
         break;
       case 'add':
-        goAdd(args[0]);
+        (args.length !== 1) ? showErrorArgs() : goAdd(args[0]);
         break;
       case 'rn':
-        goRn(args[0], args[1]);
+        (args.length !== 2) ? showErrorArgs() : goRn(args[0], args[1]);
         break;
       case 'cp':
-        goCp(args[0], args[1]);
+        (args.length !== 2) ? showErrorArgs() : goCp(args[0], args[1]);
         break;
       case 'mv':
-        goMv(args[0], args[1]);
+        (args.length !== 2) ? showErrorArgs() : goMv(args[0], args[1]);
         break;
       case 'rm':
-        goRm(args[0]);
+        (args.length !== 1) ? showErrorArgs() : goRm(args[0]);
         break;
       case 'os':
-        goOs(args[0]);
+        (args.length !== 1) ? showErrorArgs() : goOs(args[0]);
         break;
       case 'hash':
-        getHash(args[0]);
+        (args.length !== 1) ? showErrorArgs() : getHash(args[0]);
         break;
       case 'compress':
-        compressFile(args[0], args[1]);
+        (args.length !== 2) ? showErrorArgs() : compressFile(args[0], args[1]);
         break;
       case 'decompress':
-        decompressFile(args[0], args[1]);
+        (args.length !== 2) ? showErrorArgs() : decompressFile(args[0], args[1]);
         break;
       default:
-        console.error('Invalid input');
+        console.error('Invalid input. Unknown command');
         showCurrentDirectory();
     }
   })
 
-
+function showErrorArgs() {
+  console.error('Invalid input. Incorrect arguments');
+  showCurrentDirectory();
+}
