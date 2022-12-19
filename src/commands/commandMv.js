@@ -8,21 +8,31 @@ export default async function goMv(pathToFile, pathToNewDir) {
   try {
     pathToFile = path.resolve(pathToFile);
     pathToNewDir = path.resolve(pathToNewDir, path.basename(pathToFile));
-    pipeline(
-      fs.createReadStream(pathToFile),
-      fs.createWriteStream(pathToNewDir),
-      (err) => {
-        if (err) {
-          console.error('Pipeline failed');
-        } else {
-          unlink(pathToFile);
-          showCurrentDirectory();
-        }
+
+    fs.open(pathToNewDir, "wx", function (err, fd) {
+      if (err) {
+        console.log('Operation failed');
+        showCurrentDirectory();
+      } else {
+        pipeline(
+          fs.createReadStream(pathToFile),
+          fs.createWriteStream(pathToNewDir),
+          (err) => {
+            if (err) {
+              console.error('Operation failed');
+              showCurrentDirectory();
+            } else {
+              unlink(pathToFile);
+              showCurrentDirectory();
+            }
+          }
+        );
       }
-    );
+    });
   }
   catch (error) {
     console.error('Operation failed');
+    showCurrentDirectory();
   }
 }
 

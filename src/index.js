@@ -43,6 +43,9 @@ rl
 
     else data = data.trim();
     let [command, ...args] = data.split(' ');
+    if (/"|'/g.test(args)) {
+      args = args.join(' ').split(/["'] | ["']/).map((arg) => arg.replace(/"|'/g, ''));
+    }
 
     switch (command) {
       case 'up':

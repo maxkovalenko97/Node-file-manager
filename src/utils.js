@@ -4,7 +4,7 @@ import path, { resolve } from 'path';
 
 export default function showCurrentDirectory(arg) {
   let dir = arg ? arg : process.cwd();
-  process.stdout.write(`You are currently in ${dir}\n`);
+  console.log(`You are currently in ${dir}\n`);
 }
 
 async function isFile(pathToFile) {
@@ -19,7 +19,7 @@ async function isFile(pathToFile) {
       return 'dir';
     }
   } catch (err) {
-    console.log('Operation failed');
+    // console.log('Operation failed');
   }
 }
 

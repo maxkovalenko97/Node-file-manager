@@ -14,7 +14,7 @@ export default async function goOs(param) {
   }
 
   if (!possibleArgs.includes(arg)) {
-    console.log('Incorrect argument');
+    console.log('Invalid input. Incorrect argument');
     showCurrentDirectory();
     return;
   }

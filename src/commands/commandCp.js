@@ -1,25 +1,41 @@
-// import { showCurrentDirectory, isFileOrDir } from "../utils.js";
+import { isFile } from "../utils.js";
 import showCurrentDirectory from "../utils.js";
 import fs from 'fs';
 import path, { resolve } from "path";
+import { pipeline } from 'stream';
 
 export default async function goCp(pathToFile, pathToNewDir) {
+  let pathToNewFile = '';
   try {
     pathToFile = resolve(pathToFile);
-    pathToNewDir = resolve(pathToNewDir, path.basename(pathToFile));
+    pathToNewFile = resolve(resolve(pathToNewDir), path.basename(pathToFile));
 
-    // console.log(await isFileOrDir(pathToFile), '1');
-    // console.log(await isFileOrDir(pathToNewDir), '2');
+    fs.open(pathToNewFile, "wx", function (err, fd) {
+      if (err) {
+        console.log('Operation failed. File already exist');
+      }
+    });
 
-    const readableStream = fs.createReadStream(pathToFile);
-    const writableStream = fs.createWriteStream(pathToNewDir);
-    await readableStream.pipe(writableStream);
-    showCurrentDirectory();
+    if ((await isFile(pathToFile) === 'file') && (await isFile(resolve(pathToNewDir)) === 'dir')) {
+      pipeline(
+        fs.createReadStream(pathToFile),
+        fs.createWriteStream(pathToNewFile),
+        (err) => {
+          if (err) {
+            console.error('Operation failed');
+            showCurrentDirectory();
+          }
+        });
+      showCurrentDirectory();
+    } else {
+      throw new Error();
+    }
   }
   catch (error) {
     console.error('Operation failed');
+    showCurrentDirectory();
   }
 }
 
-// PROBLEMS WITH COPY DIRECTRY, CATCHING ERRORS
+
 

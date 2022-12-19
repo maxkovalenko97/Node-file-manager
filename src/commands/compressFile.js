@@ -2,7 +2,7 @@ import showCurrentDirectory, { isFile } from "../utils.js";
 import path from 'path';
 import zlib from 'zlib';
 import fs from 'fs';
-import { pipeline } from 'stream/promises';
+import { pipeline } from 'stream';
 
 
 export default async function compressFile(pathToFile, pathToDestination) {
@@ -11,14 +11,22 @@ export default async function compressFile(pathToFile, pathToDestination) {
     pathToDestination = path.resolve(pathToDestination);
 
     if ((await isFile(pathToFile) === 'file') && (await isFile(pathToDestination) === 'dir')) {
-      const readableStream = fs.createReadStream(pathToFile);
-      const writableStream = fs.createWriteStream(path.resolve(pathToDestination, `${path.basename(pathToFile)}.br`));
-      const brotliCompress = zlib.createBrotliCompress();
-      await pipeline(readableStream, brotliCompress, writableStream);
+      pipeline(
+        fs.createReadStream(pathToFile),
+        zlib.createBrotliCompress(),
+        fs.createWriteStream(path.resolve(pathToDestination, `${path.basename(pathToFile)}.br`)),
+        (err) => {
+          if (err) {
+            console.error('Operation failed');
+            showCurrentDirectory();
+          }
+        });
       showCurrentDirectory();
+    } else {
+      throw new Error();
     }
   } catch (err) {
-    console.error('Operation failed', err);
+    console.error('Operation failed');
     showCurrentDirectory();
   }
 }
