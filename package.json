@@ -1,0 +1,12 @@
+{
+  "name": "node-file-manager",
+  "version": "1.0.0",
+  "description": "This is repository of \"Node file manager\" task",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "maxkovalenko97",
+  "license": "ISC"
+}
